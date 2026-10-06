@@ -1,62 +1,32 @@
-from Model.studentModel import Student
+from Repository.student_repository import (
+    create_student as create_student_repo,
+    get_all_students as get_all_students_repo,
+    get_student as get_student_repo,
+    update_student as update_student_repo,
+    delete_student as delete_student_repo
+)
 
 
 # CREATE
 def create_student(db, student):
-    new_student = Student(
-        name=student.name,
-        email=student.email,
-        age=student.age,
-        course=student.course
-    )
-
-    db.add(new_student)
-    db.commit()
-    db.refresh(new_student)
-
-    return new_student
+    return create_student_repo(db, student)
 
 
 # READ ALL
 def get_all_students(db):
-    return db.query(Student).all()
+    return get_all_students_repo(db)
 
 
 # READ ONE
 def get_student(db, student_id):
-    return db.query(Student).filter(Student.id == student_id).first()
+    return get_student_repo(db, student_id)
 
 
 # UPDATE
 def update_student(db, student_id, student):
-    existing_student = db.query(Student).filter(
-        Student.id == student_id
-    ).first()
-
-    if existing_student is None:
-        return None
-
-    existing_student.name = student.name
-    existing_student.email = student.email
-    existing_student.age = student.age
-    existing_student.course = student.course
-
-    db.commit()
-    db.refresh(existing_student)
-
-    return existing_student
+    return update_student_repo(db, student_id, student)
 
 
 # DELETE
 def delete_student(db, student_id):
-    existing_student = db.query(Student).filter(
-        Student.id == student_id
-    ).first()
-
-    if existing_student is None:
-        return None
-
-    db.delete(existing_student)
-    db.commit()
-
-    return existing_student
+    return delete_student_repo(db, student_id)
