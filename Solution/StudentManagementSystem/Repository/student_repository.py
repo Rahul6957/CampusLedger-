@@ -3,7 +3,7 @@ from sqlalchemy import text
 
 # CREATE
 def create_student(db, student):
-    query = text("""INSERT INTO students (name, email, age, course)VALUES (:name, :email, :age, :course) """)
+    query = text("""INSERT INTO students (name, email, age, course) VALUES (:name, :email, :age, :course) """)
 
     db.execute(
         query,
@@ -22,7 +22,7 @@ def create_student(db, student):
 
 # READ ALL
 def get_all_students(db):
-    query = text("""SELECT id, name, email, age, courseFROM students""")
+    query = text("""SELECT  id, name, email, age, course FROM students""")
 
     result = db.execute(query)
 
@@ -62,7 +62,7 @@ def update_student(db, student_id, student):
 
 # DELETE
 def delete_student(db, student_id):
-    query = text("""DELETE FROM studentsWHERE id = :student_id""")
+    query = text("""DELETE FROM students WHERE id = :student_id""")
 
     result = db.execute( query, {"student_id": student_id} )
 
@@ -76,7 +76,7 @@ def delete_student(db, student_id):
 
 # Helper
 def get_student_by_email(db, email):
-    query = text("""SELECT id, name, email, age, courseFROM studentsWHERE email = :email """)
+    query = text("""SELECT id, name, email, age, course FROM students WHERE email = :email """)
 
     result = db.execute(query,{"email": email} )
 
